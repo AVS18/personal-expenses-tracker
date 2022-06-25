@@ -1,0 +1,57 @@
+{%extends 'dashboard.html'%}
+{%block dashboard%}
+<form action="/displayExpense">
+    {%csrf_token%}
+    <div class="row">
+        <div class="col-sm-4">
+            <label for="start_date">Start Date</label>
+            <input type="datetime-local" class="form-control" id="start_date" name="start_date" required>
+        </div>
+        <div class="col-sm-4">
+            <label for="end_date">End Date</label>
+            <input type="datetime-local" class="form-control" id="end_date" name="end_date" required>
+        </div>
+        <div class="col-sm-4">
+            <label for="bank">Bank</label>
+            <select name="bank" id="bank" class="form-control">
+                <option value="0">Select</option>
+                {%for bank_name in banks%}
+                    <option value="{{bank_name.id}}">{{bank_name.name}}</option>
+                {%endfor%}
+            </select>
+        </div>
+    </div>
+    <br>
+    <input type="submit" value="Filter" class="btn btn-outline-primary">
+</form>
+<p>Your Expenses</p>
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Transaction Date</th>
+        <th>Bank Name</th>
+        <th>Transaction Amount</th>
+        <th>Remarks</th>
+        <th>Type</th>
+        <th>Balance in Bank</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%for transaction in transactions%}
+      <tr>
+        <td>{{transaction.transaction_date}}</td>
+        <td>{{transaction.bank.name}}</td>
+        <td>{{transaction.amount_spend}}</td>
+        <td>{{transaction.message}}</td>
+        <td>{{transaction.type}}</td>
+        <td>{{transaction.balance_in_bank}}</td>
+        <td><a href="/deleteTransaction/{{transaction.id}}" class="btn btn-outline-danger">Delete Transaction</a></td>
+      </tr>
+      {%endfor%}
+    </tbody>
+</table>
+<p><u>Statistics</u></p>
+<p>Total Amount Credited: {{amount_credit}}</p>
+<p>Total Amount Debited: {{amount_debit}}</p>
+{%endblock dashboard%}

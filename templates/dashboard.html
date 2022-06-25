@@ -1,0 +1,56 @@
+{%extends 'home.html'%}
+{%block content%}
+<style>
+    .nav-item{
+        margin-right: 30px;
+        font-size: larger;
+    }
+</style>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="/dashboard">Monthly Expense Tracker</a>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="/addBank">Add Bank</a>
+          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/addExpense">Add Expense</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/displayExpense">Display Expense</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+        </li>
+      </ul>
+    </div>
+</nav>
+<p>Your Bank(s) Balance(s)</p>
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Bank Name</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%for bank in banks%}
+      <tr>
+        <td>{{bank.name}}</td>
+        <td>{{bank.amount}}</td>
+      </tr>
+      {%endfor%}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td><b>Total Amount</b></td>
+            <td>{{total}}</td>
+        </tr>
+    </tfoot>
+</table>
+{%block dashboard%}
+{%endblock dashboard%}
+{%endblock%}

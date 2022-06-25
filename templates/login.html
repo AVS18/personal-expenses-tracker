@@ -1,0 +1,18 @@
+{%extends 'home.html'%}
+{%block content%}
+<p style="text-align:center;font-style:italic;font-size: x-large;">Personal Balance Tracker</p>
+<form action="/login" method="POST">
+    {%csrf_token%}
+    <div class="row">
+        <div class="col-sm-6 form-group">
+            <label for="username"><p>Username</p></label>
+            <input type="text" name="username" id="username" class="form-control" required>
+        </div>
+        <div class="col-sm-6 form-group">
+            <label for="password"><p>Password</p></label>
+            <input type="password" name="password" id="password" class="form-control" required>
+        </div>
+    </div>
+    <input type="submit" value="Login" class="btn btn-outline-success">
+</form>
+{%endblock%}
