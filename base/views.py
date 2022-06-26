@@ -107,10 +107,10 @@ def displayExpense(request):
         bank = request.GET["bank"]
         bank_obj = Bank.objects.filter(user=request.user,id=bank)
         if len(bank_obj)==0:
-            storage = messages.get_messages(request)
-            storage.used=True
-            messages.info(request,"Wrong Type")
-            return redirect('/dashboard')
+            transactions = Transcation.objects.filter(transaction_date__range=(start_date,end_date),user=request.user).order_by('transaction_date')
+            amount_debit = sum([transaction.amount_spend for transaction in transactions if transaction.type=='debit'])
+            amount_credit = sum([transaction.amount_spend for transaction in transactions if transaction.type=='credit'])
+            return render(request,"displayExpense.html",{'transactions':transactions,'amount_credit':amount_credit,'amount_debit':amount_debit,'banks':bank_balance['banks'],'total':bank_balance['total']})
         transactions = Transcation.objects.filter(transaction_date__range=(start_date,end_date),bank=bank_obj[0],user=request.user).order_by('transaction_date')
         amount_debit = sum([transaction.amount_spend for transaction in transactions if transaction.type=='debit'])
         amount_credit = sum([transaction.amount_spend for transaction in transactions if transaction.type=='credit'])
